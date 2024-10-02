@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface Message {
+export interface Message {
   sender: 'user' | 'bot';
   text: string;
 }
@@ -15,7 +15,7 @@ const useChatStore = create<ChatState>((set) => ({
   messages: [
     {
       sender: 'bot',
-      text: "Hey! This is Francisco Arantes speaking—well, sort of. Feel free to ask me about my career path, academic studies, or skills. I'm here to help you explore any aspect of my professional journey.",
+      text: "Ask me anything you'd expect to learn from a cv...",
     },
   ],
   addMessage: (sender, text) =>

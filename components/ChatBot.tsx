@@ -3,6 +3,18 @@
 import { useState, useEffect, useRef } from 'react';
 import useChatStore from '../stores/chatStore';
 import { getOpenAIBotReply } from '../utils/api';
+import Toolbar from './Toolbar';
+import { exportChatToPdf } from '../utils/exportToPdf';
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+
+const getSessionId = () => {
+  let sessionId = localStorage.getItem('sessionId');
+  if (!sessionId) {
+    sessionId = `session-${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('sessionId', sessionId);
+  }
+  return sessionId;
+};
 
 // Function to parse response text for newlines and markdown (like **bold**)
 const parseResponseText = (text: string) => {
@@ -36,20 +48,25 @@ const ChatBot = () => {
   const [typing, setTyping] = useState(false); // State to indicate if the bot is typing
   const messagesEndRef = useRef<HTMLDivElement>(null); // Reference to the bottom of the messages container
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const handleSend = async (text?: string) => {
+    const messageToSend = text || input.trim();
+    if (!messageToSend) return;
 
     // Add user's message to the global store
-    addMessage('user', input);
+    addMessage('user', messageToSend);
 
     // Set typing indicator to true
     setTyping(true);
 
-    // Clear the input field
-    setInput('');
+    // Clear the input field if using direct input
+    if (!text) {
+      setInput('');
+    }
 
-    // Fetch bot's reply from the API
-    const reply = await getOpenAIBotReply(input);
+    const sessionId = getSessionId();
+
+    // Fetch bot's reply from the API with sessionId
+    const reply = await getOpenAIBotReply(messageToSend, sessionId);
 
     // Add bot's reply to the global store
     addMessage('bot', reply);
@@ -65,8 +82,32 @@ const ChatBot = () => {
     }
   }, [messages, typing]);
 
+  // Toolbar functionalities
+  const exportChat = () => {
+    exportChatToPdf(messages);
+  };
+
+  const downloadCV = () => {
+    const link = document.createElement('a');
+    link.href = '/static/your-cv.pdf'; // Assume your CV file is stored in the public/static folder
+    link.download = 'your-cv.pdf';
+    link.click();
+  };
+
+  const visitSourceCode = () => {
+    window.open('https://github.com/your-repo', '_blank');
+  };
+
+  // Function to add a prepared prompt
+  const addPreparedPrompt = (prompt: string) => {
+    handleSend(prompt); // Use the handleSend function with the prepared prompt text
+  };
+
   return (
     <div className="flex flex-col h-full border rounded-lg bg-gray-100 shadow-md overflow-hidden">
+      {/* Toolbar */}
+      <Toolbar exportChat={exportChat} downloadCV={downloadCV} visitSourceCode={visitSourceCode} addPreparedPrompt={addPreparedPrompt} />
+
       {/* Chat content container with overflow-y to enable scrolling */}
       <div className="flex-1 p-4 overflow-y-auto">
         {messages.map((msg, index) => (
@@ -81,12 +122,10 @@ const ChatBot = () => {
                   : 'bg-gray-300 text-gray-600'
               }`}
             >
-              {/* Parse and display the message */}
               {parseResponseText(msg.text)}
             </span>
           </div>
         ))}
-        {/* Typing indicator */}
         {typing && (
           <div className="mb-2 text-left">
             <span className="inline-block px-3 py-2 rounded bg-teal-600 text-gray-200">
@@ -94,7 +133,6 @@ const ChatBot = () => {
             </span>
           </div>
         )}
-        {/* Dummy div to scroll into view */}
         <div ref={messagesEndRef} />
       </div>
       <div className="p-4 border-t flex items-center gap-2">
@@ -108,16 +146,18 @@ const ChatBot = () => {
         />
         <button
           onClick={handleSend}
-          className="px-4 py-2 bg-teal-600 text-gray-200 rounded hover:bg-teal-800 transition"
+          className="relative group flex items-center gap-2 p-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300 shadow-sm hover:shadow-md transition-all duration-200"
         >
-          Send
+          <PaperAirplaneIcon className="w-5 h-5" />
+          <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-max p-2 rounded-md text-xs text-white bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            Send
+          </span>
         </button>
       </div>
     </div>
   );
 };
 
-// Component to render animated three dots
 const TypingIndicator = () => {
   return (
     <span className="flex gap-1">

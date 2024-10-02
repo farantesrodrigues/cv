@@ -23,7 +23,7 @@ export default function Home() {
 
       {/* Main Heading */}
       <h1 className="text-4xl font-bold mb-4 text-center text-gray-200 self-center">
-        Your Interactive Guide to My Career
+        This is not a cv.
       </h1>
 
       {/* ChatBot Component with a fixed height */}
