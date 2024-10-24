@@ -39,3 +39,11 @@ next-env.d.ts
 .env.sentry-build-plugin
 
 /lambda_openai_bot/venv/
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+
+.env
+.env.*

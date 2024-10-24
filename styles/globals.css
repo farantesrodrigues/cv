@@ -6,3 +6,16 @@ input:focus {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+  .cv-container {
+    margin: 10mm;
+    font-family: Arial, sans-serif;
+  }
+  .no-print {
+    display: none;
+  }
+}

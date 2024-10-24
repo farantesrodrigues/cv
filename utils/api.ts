@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-const API_URL_MANUAL =
-  'https://7bz7lvsdtf.execute-api.us-east-1.amazonaws.com/chatbot';
-const API_URL_OPEN_AI =
-  'https://7bz7lvsdtf.execute-api.us-east-1.amazonaws.com/chatbot-openai';
+const API_URL_MANUAL = `${process.env.NEXT_PUBLIC_LAMBDA_DOMAIN}/chatbot`;
+const API_URL_OPEN_AI = `${process.env.NEXT_PUBLIC_LAMBDA_DOMAIN}/chatbot-openai`;
 
 export function getBotReply(api_url: string) {
   return async (message: string, sessionId: string) => {

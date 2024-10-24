@@ -1,0 +1,171 @@
+{
+    "contact": {
+      "full_name": "Francisco Arantes",
+      "address": "Rue Franz Merjay 88, Bruxelles, BE",
+      "phone_number": "+32 (0) 486 970 355",
+      "email": "farantesrodrigues@gmail.com",
+      "linkedin": "https://linkedin.com/in/farantesrodrigues",
+      "github": "https://github.com/farantesrodrigues",
+      "bio": "https://not-a-cv.com"
+    },
+    "summary": "Experienced software developer specializing in high-intensity projects in the banking industry, skilled in both senior and leading roles. Proficient in Python, JavaScript, and leading teams to deliver robust solutions. Skilled at engaging in all stages of product development, from conception to delivery, with a strong focus on user needs.",
+    "hard_skills": [
+      "Languages: Python (>10 years), JavaScript (>10 years), Ruby (2 years) and also bash, sql, ...",
+      "Frameworks: Django, Flask, Express, Next.js, Rails, Angular, ReactJS, VueJS, Ember, Knockout, JQuery, ...",
+      "Databases: Microsoft SQL Server, Oracle SQL Developer, MongoDB, PostgreSQL",
+      "Tools and Platforms: Databricks, AWS, Git, Subversion, Heroku, Digital Ocean, IBM BlueMix, CI tools (Travis, CircleCI)",
+      "Testing and Automation: Jasmine, Karma, Protractor, Python unittest, Grunt JS",
+      "Data Visualization: D3.js, nvd3, Tableau, PowerBI",
+      "Mobile Development: React Native, NativeScript, Android Studio, Cordova for hybrid mobile builds"
+    ],
+    "soft_skills": [
+      "Team Collaboration",
+      "Leadership and Team Management",
+      "Problem Solving",
+      "Effective Communication",
+      "Project Management",
+      "Adaptability in High-pressure Environments"
+    ],
+    "software_experience": [
+      {
+        "project_name": "Cash 2 Project at National Bank of Belgium",
+        "description": "Led the frontend development team for a major banking project spanning 11 countries. Managed upgrades to technologies, architecture, and developed libraries used in multiple projects.",
+        "technologies": ["Angular", "Flask", "SQLAlchemy"],
+        "role": "Tech Lead, Frontend Developer",
+        "duration": "March 2017 - Present"
+      },
+      {
+        "project_name": "Tableau API Extension at Cronos Group",
+        "description": "Developed a Tableau Software extension, using reverse engineering for Tableau APIs to enhance user experience.",
+        "technologies": ["NodeJS", "Angular2", "PostgreSQL"],
+        "role": "Senior JavaScript Developer",
+        "duration": "Nov 2016 - Mar 2017"
+      },
+      {
+        "project_name": "Freelance Projects",
+        "description": "Built various web and mobile applications using Django Rest Framework for backend, and Angular for frontend. Developed real-time chat and notification systems.",
+        "technologies": ["Django", "Angular", "Node.js", "Ruby on Rails"],
+        "role": "Full Stack Developer",
+        "duration": "2013 - 2016"
+      }
+    ],
+    "business_experience": [
+      {
+        "role": "Manager France",
+        "company": "TECIPA",
+        "duration": "Sep 2011 - Mar 2012",
+        "responsibilities": [
+          "Launched sales and logistics operations in France for non-woven fabrics.",
+          "Direct management of 200+ active B2B clients."
+        ]
+      },
+      {
+        "role": "Junior Zone Coordinator",
+        "company": "L'Oreal",
+        "duration": "Jun 2010 - Aug 2011",
+        "responsibilities": [
+          "Coordinated strategic zone marketing for LATAM professional products division.",
+          "Supported budgeting and marketing development for REDKEN and MATRIX brands."
+        ]
+      },
+      {
+        "role": "Junior Product Manager",
+        "company": "Primedrinks",
+        "duration": "Jul 2008 - Feb 2009",
+        "responsibilities": [
+          "Managed operational marketing for top wine brands.",
+          "Prepared marketing plans for major brands such as Esporao and Quinta da Aveleda."
+        ]
+      }
+    ],
+    "academic_background": [
+      {
+        "degree": "CEMS - Master of International Management",
+        "institution": "Prague University of Economics & Nova School of Business & Economics",
+        "year_of_completion": 2010,
+        "gpa": "B"
+      },
+      {
+        "degree": "MSc in Economics",
+        "institution": "Nova School of Business & Economics",
+        "year_of_completion": 2009,
+        "gpa": "14"
+      },
+      {
+        "degree": "BSc in Economics",
+        "institution": "Nova School of Business & Economics",
+        "year_of_completion": 2008,
+        "gpa": "12"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "MongoDB for Developers",
+        "institution": "MongoDB",
+        "year_of_completion": 2019
+      },
+      {
+        "name": "Blockchain Developer Bootcamp",
+        "institution": "Consensys",
+        "year_of_completion": 2019
+      }
+    ],
+    "personality": [
+      "Problem Solver",
+      "Analytical Thinker",
+      "Growth Mindset",
+      "Curious and Innovative",
+      "Organizational Savvy"
+    ],
+    "personal_interests": [
+      "Hiking: Passionate about adventurous exploration, challenging trails, nature immersion, and wilderness camping.",
+      "Sports: Enjoy tennis, surfing, HIIT, running, and obstacle courses.",
+      "Family: Dedicated to nurturing children's growth across emotional, intellectual, physical, and social dimensions.",
+      "Culture: Enthusiastic about exploring new cultures, international mobility, immersive learning, and fostering cultural sensitivity and diplomacy."
+    ],
+    "languages": [
+      {
+        "language": "English",
+        "proficiency": "Full Professional"
+      },
+      {
+        "language": "Portuguese",
+        "proficiency": "Native or Bilingual"
+      },
+      {
+        "language": "French",
+        "proficiency": "Full Professional"
+      },
+      {
+        "language": "Spanish",
+        "proficiency": "Professional Working"
+      },
+      {
+        "language": "Japanese",
+        "proficiency": "JLPT 5 (Basic)"
+      }
+    ],
+    "achievements": [
+      {
+        "title": "Led Cash 2 Project",
+        "description": "Led the frontend team for a project involving 11 countries, successfully managing a team of 6 developers."
+      },
+      {
+        "title": "Tableau API Extension Development",
+        "description": "Reverse-engineered Tableau APIs to enhance user experience, contributing significant architectural insights."
+      }
+    ],
+    "references": [
+      {
+        "name": "Nele de Vleeschvauer",
+        "relationship": "Head of Unit for Application Development in Financial Products",
+        "contact_information": "nele.devleeschauwer@nbb.be"
+      },
+      {
+        "name": "Mathieu Formule",
+        "relationship": "Project Manager at National Bank of Belgium (Cash 2)",
+        "contact_information": "mathieu.formule@nbb.be"
+      }
+    ]
+  }
+  

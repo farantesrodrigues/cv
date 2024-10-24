@@ -6,6 +6,8 @@ import { getOpenAIBotReply } from '../utils/api';
 import Toolbar from './Toolbar';
 import { exportChatToPdf } from '../utils/exportToPdf';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import DynamicCV from './DynamicCV';
+import { XMarkIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid';
 
 const getSessionId = () => {
   let sessionId = localStorage.getItem('sessionId');
@@ -39,6 +41,7 @@ const parseMarkdownSimple = (text: string) => {
   return boldParsed;
 };
 
+
 const ChatBot = () => {
   // Zustand store for managing messages
   const messages = useChatStore((state) => state.messages);
@@ -46,7 +49,9 @@ const ChatBot = () => {
 
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false); // State to indicate if the bot is typing
+  const [showCVModal, setShowCVModal] = useState(false); // State to control the CV modal visibility
   const messagesEndRef = useRef<HTMLDivElement>(null); // Reference to the bottom of the messages container
+  const cvRef = useRef<HTMLDivElement>(null); // Reference for the CV element
 
   const handleSend = async (text?: string) => {
     const messageToSend = text || input.trim();
@@ -81,6 +86,34 @@ const ChatBot = () => {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, typing]);
+  
+  const handleDownloadCV = () => {
+    if (!cvRef.current) {
+      console.error('CV element not found');
+      return;
+    }
+  
+    // Customize the options for html2pdf
+    const options = {
+      margin: [10, 10, 10, 10], // Margins in mm: top, right, bottom, left
+      filename: 'francisco_arantes_cv.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2, // Improve resolution for higher quality
+        useCORS: true, // Enables cross-origin support if needed
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait',
+      },
+    };
+  
+    // @ts-ignore
+    import('html2pdf.js').then((html2pdf: Module) => {
+      html2pdf.default().set(options).from(cvRef.current).save();
+    });
+  };
 
   // Toolbar functionalities
   const exportChat = () => {
@@ -88,14 +121,11 @@ const ChatBot = () => {
   };
 
   const downloadCV = () => {
-    const link = document.createElement('a');
-    link.href = '/static/your-cv.pdf'; // Assume your CV file is stored in the public/static folder
-    link.download = 'your-cv.pdf';
-    link.click();
+    setShowCVModal(true); // Set modal visibility to true to open the modal
   };
 
   const visitSourceCode = () => {
-    window.open('https://github.com/your-repo', '_blank');
+    window.open('https://github.com/farantesrodrigues/cv', '_blank');
   };
 
   // Function to add a prepared prompt
@@ -144,8 +174,7 @@ const ChatBot = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyUp={(e) => e.key === 'Enter' && handleSend()}
         />
-        <button
-          onClick={handleSend}
+        <button onClick={() => handleSend()}
           className="relative group flex items-center gap-2 p-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300 shadow-sm hover:shadow-md transition-all duration-200"
         >
           <PaperAirplaneIcon className="w-5 h-5" />
@@ -154,6 +183,42 @@ const ChatBot = () => {
           </span>
         </button>
       </div>
+
+      {showCVModal && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="bg-white rounded-lg w-[800px] h-auto max-h-[90%] overflow-auto relative">
+          
+          {/* Sticky Toolbar */}
+          <div className="sticky top-0 bg-white p-4 border-b flex justify-end gap-4">
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setShowCVModal(false)}
+              className="text-gray-600 hover:text-gray-800"
+              aria-label="Close Modal"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+
+            {/* Download Button */}
+            <button
+              onClick={handleDownloadCV}
+              className="text-gray-600 hover:text-gray-800"
+              aria-label="Download CV"
+            >
+              <ArrowDownTrayIcon className="h-6 w-6" />
+            </button>
+
+          </div>
+
+          {/* Dynamic CV Component */}
+          <div ref={cvRef} className="cv-container p-4">
+            <DynamicCV />
+          </div>
+        </div>
+      </div>
+    )}
+
     </div>
   );
 };
