@@ -109,7 +109,7 @@ const ChatBot = () => {
       },
     };
   
-    // @ts-ignore
+    // @ts-expect-error('missing typings in html2pdf')
     import('html2pdf.js').then((html2pdf: Module) => {
       html2pdf.default().set(options).from(cvRef.current).save();
     });

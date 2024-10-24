@@ -13,6 +13,7 @@ interface ToolbarProps {
 const Toolbar: React.FC<ToolbarProps> = ({ exportChat, downloadCV, visitSourceCode, addPreparedPrompt }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const router = useRouter();
+    const clearTokens = useAuthStore((state) => state.clearTokens);
 
     // Software Development Prompts
     const softwarePrompts: string[] = [
@@ -70,6 +71,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ exportChat, downloadCV, visitSourceCo
     
     // Handle logout
     const handleLogout = async () => {
+      await clearTokens();
       router.push('/');
     };
 

@@ -1,23 +1,17 @@
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import ChatBot from '../../components/ChatBot';
 import Avatar from '../../components/Avatar';
-import { useAuthStore } from '@/stores/authStore';
 import { useRequireAuth } from '@/hooks/useRequiredAuth';
 
 export default function Fran() {
   const { isAuthenticated, loading } = useRequireAuth();
 
   if (loading) {
-
     return <div>Loading...</div>;
-
   }
 
   if (!isAuthenticated) {
-
     return <div>Unauthenticated</div>;
-
   }
 
   return (
