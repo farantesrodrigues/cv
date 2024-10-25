@@ -3,6 +3,7 @@ import axios from 'axios';
 const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN;
 const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;
 const clientSecret = process.env.NEXT_PUBLIC_COGNITO_CLIENT_SECRET
+const lamdaDomain = process.env.NEXT_PUBLIC_LAMBDA_DOMAIN
 const redirectUri = process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URI;
 
 export interface Tokens {
@@ -74,5 +75,32 @@ export const handleRedirect = async (code: string): Promise<Tokens | null> => {
   } catch (error) {
     console.error('Error loading tokens:', error);
     return null;
+  }
+};
+
+export const checkTokenExpiration = (token: string): boolean => {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+    return payload.exp < currentTime; // True if expired
+  } catch (error) {
+    console.error('Error checking token expiration:', error);
+    return true; // Assume expired if there's an error
+  }
+};
+
+export const clearTokens = async () => {
+  try {
+    const response = await axios.post(`${lamdaDomain}/logout`, {
+      withCredentials: true,
+    });
+
+    if (response.data.ok) {
+      console.log('Logout successful');
+    } else {
+      console.error('Logout failed:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error during logout:', error);
   }
 };

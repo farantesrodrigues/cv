@@ -47,3 +47,5 @@ amplifyconfiguration*
 
 .env
 .env.*
+
+/venv

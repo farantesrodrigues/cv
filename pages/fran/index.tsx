@@ -11,7 +11,7 @@ export default function Fran() {
   }
 
   if (!isAuthenticated) {
-    return <div>Unauthenticated</div>;
+    return null;
   }
 
   return (

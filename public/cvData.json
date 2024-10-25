@@ -12,7 +12,8 @@
     "hard_skills": [
       "Languages: Python (>10 years), JavaScript (>10 years), Ruby (2 years) and also bash, sql, ...",
       "Frameworks: Django, Flask, Express, Next.js, Rails, Angular, ReactJS, VueJS, Ember, Knockout, JQuery, ...",
-      "Databases: Microsoft SQL Server, Oracle SQL Developer, MongoDB, PostgreSQL",
+      "Cloud Platforms: AWS, Azure",
+      "Data Management: Databricks, MS SQL Server, Oracle SQL Developer, MongoDB, PostgreSQL",
       "Tools and Platforms: Databricks, AWS, Git, Subversion, Heroku, Digital Ocean, IBM BlueMix, CI tools (Travis, CircleCI)",
       "Testing and Automation: Jasmine, Karma, Protractor, Python unittest, Grunt JS",
       "Data Visualization: D3.js, nvd3, Tableau, PowerBI",
@@ -28,6 +29,20 @@
     ],
     "software_experience": [
       {
+        "project_name": "CAP2 / One Gate at National Bank of Belgium",
+        "description": "Implemented data transition from legacy databases into Databricks and implemented data pipelines and products",
+        "technologies": ["Databricks", "Airflow", "SQL", "PySpark"],
+        "role": "Data Engineer",
+        "duration": "September 2024 - Present"
+      },
+      {
+        "project_name": "SBSP at National Bank of Belgium",
+        "description": "Created web apis for data aggregation queries and risk models indicators on securities portfolios",
+        "technologies": ["Flask", "SQL Alchemy", "Pandas"],
+        "role": "Backend Developer",
+        "duration": "January 2024 - July 2024"
+      },
+      {
         "project_name": "Cash 2 Project at National Bank of Belgium",
         "description": "Led the frontend development team for a major banking project spanning 11 countries. Managed upgrades to technologies, architecture, and developed libraries used in multiple projects.",
         "technologies": ["Angular", "Flask", "SQLAlchemy"],
@@ -36,14 +51,14 @@
       },
       {
         "project_name": "Tableau API Extension at Cronos Group",
-        "description": "Developed a Tableau Software extension, using reverse engineering for Tableau APIs to enhance user experience.",
+        "description": "Developed a Tableau Software extension, using reverse engineering for Tableau APIs (Dataviz) to enhance user experience.",
         "technologies": ["NodeJS", "Angular2", "PostgreSQL"],
-        "role": "Senior JavaScript Developer",
+        "role": "Senior Developer",
         "duration": "Nov 2016 - Mar 2017"
       },
       {
         "project_name": "Freelance Projects",
-        "description": "Built various web and mobile applications using Django Rest Framework for backend, and Angular for frontend. Developed real-time chat and notification systems.",
+        "description": "Built various web and mobile applications using Django Rest Framework for backend, and Angular for frontend. Developed real-time chat and notification systems. Photo and filesystem management and collaboration.",
         "technologies": ["Django", "Angular", "Node.js", "Ruby on Rails"],
         "role": "Full Stack Developer",
         "duration": "2013 - 2016"
@@ -143,16 +158,6 @@
       {
         "language": "Japanese",
         "proficiency": "JLPT 5 (Basic)"
-      }
-    ],
-    "achievements": [
-      {
-        "title": "Led Cash 2 Project",
-        "description": "Led the frontend team for a project involving 11 countries, successfully managing a team of 6 developers."
-      },
-      {
-        "title": "Tableau API Extension Development",
-        "description": "Reverse-engineered Tableau APIs to enhance user experience, contributing significant architectural insights."
       }
     ],
     "references": [

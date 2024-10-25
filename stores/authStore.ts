@@ -1,6 +1,6 @@
-import {create} from 'zustand';
-import { fetchTokens as fetchTokens, Tokens } from '../utils/authHelpers';
-
+import { create } from 'zustand';
+import Cookies from 'js-cookie';
+import { fetchTokens, Tokens, checkTokenExpiration, clearTokens } from '../utils/authHelpers';
 
 interface AuthState {
   idToken: string | null;
@@ -23,7 +23,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   setTokens: (idToken, accessToken, refreshToken) => {
     const { idToken: currentIdToken, accessToken: currentAccessToken, refreshToken: currentRefreshToken } = get();
 
-    // Avoid updating if the tokens haven't changed
     if (
       currentIdToken === idToken &&
       currentAccessToken === accessToken &&
@@ -38,21 +37,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       refreshToken,
       isAuthenticated: true,
     });
+
+    // Persist tokens in cookies
+    Cookies.set('idToken', idToken);
+    Cookies.set('accessToken', accessToken);
+    Cookies.set('refreshToken', refreshToken);
   },
 
-  clearTokens: () => {
+  clearTokens: async () => {
+    await clearTokens();
+
     set({
       idToken: null,
       accessToken: null,
       refreshToken: null,
       isAuthenticated: false,
     });
-
   },
 
   loadTokens: async () => {
-    const { loading } = get();
-    // If already loading, do not proceed
+    const { loading, setTokens } = get();
     if (loading) {
       return;
     }
@@ -60,22 +64,35 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ loading: true });
 
     try {
+      // Attempt to load tokens from cookies
+      const idToken = Cookies.get('idToken');
+      const accessToken = Cookies.get('accessToken');
+      const refreshToken = Cookies.get('refreshToken');
+
+      if (idToken && accessToken && refreshToken) {
+        const isTokenExpired = checkTokenExpiration(idToken);
+
+        if (!isTokenExpired) {
+          set({ idToken, accessToken, refreshToken, isAuthenticated: true });
+          set({ loading: false });
+          return;
+        }
+      }
+
+      // If tokens are not present or expired, fetch new ones
       const tokens: Tokens | null = await fetchTokens();
 
       if (tokens) {
-        const { idToken, accessToken, refreshToken } = tokens;
-        set({ idToken, accessToken, refreshToken, isAuthenticated: true });
+        const { idToken: newIdToken, accessToken: newAccessToken, refreshToken: newRefreshToken } = tokens;
+        setTokens(newIdToken, newAccessToken, newRefreshToken);
       } else {
         set({ isAuthenticated: false });
       }
-
     } catch (error) {
       console.error('Error loading tokens:', error);
       set({ isAuthenticated: false });
     } finally {
-      // Ensure loading state is reset in the end
       set({ loading: false });
     }
   },
-
 }));

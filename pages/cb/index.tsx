@@ -14,10 +14,8 @@ const Callback: React.FC = () => {
           const tokens: Tokens | null = await handleRedirect(code);
           if (tokens) {
             const { idToken, accessToken, refreshToken } = tokens;
-            // Use Zustand to store tokens in the state
             setTokens(idToken, accessToken, refreshToken);
-            // Redirect to a protected page after successful login
-            router.push('/fran');
+            router.push('/fran/');
           } else {
             setError('Authentication failed. Please try again.');
           }

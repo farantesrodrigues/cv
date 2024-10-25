@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { getCognitoLoginUrl } from '../utils/authHelpers';
+import { getCognitoLoginUrl } from '../../utils/authHelpers';
 
 export default function SignIn() {
   const handleLogin = () => {

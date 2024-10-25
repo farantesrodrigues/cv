@@ -1,11 +1,13 @@
-import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { getCognitoLoginUrl } from '@/utils/authHelpers';
 
 export default function Home() {
-  const router = useRouter();
-
   const handleSignIn = () => {
-    router.push('/signin'); // Redirect to the login page
+    const loginUrl = getCognitoLoginUrl();
+    
+    if (loginUrl) {
+      window.location.href = loginUrl;
+    }
   };
 
   return (
