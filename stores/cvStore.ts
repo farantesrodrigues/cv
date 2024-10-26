@@ -79,14 +79,18 @@ const useCVStore = create<CVStore>((set) => ({
   data: null,
   loading: false,
   error: null,
+
   loadCVDataFromPath: async (url: string) => {
     set({ loading: true, error: null });
     try {
       const response = await fetch(url);
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
       const data: CVData = await response.json();
+      
       set({ data, loading: false });
     } catch (error) {
       set({ error: (error as Error).message, loading: false });

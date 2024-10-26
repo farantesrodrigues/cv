@@ -1,7 +1,80 @@
+import axios from 'axios';
 import { Message } from '@/stores/chatStore';
 import jsPDF from 'jspdf';
 
-export const loadImageAsBase64 = (url: string): Promise<string> => {
+/***
+ * Serverless interaction
+ */
+
+const API_URL_MANUAL = `${process.env.NEXT_PUBLIC_LAMBDA_DOMAIN}/chatbot`;
+const API_URL_OPEN_AI = `${process.env.NEXT_PUBLIC_LAMBDA_DOMAIN}/chatbot-openai`;
+
+function getBotReply(api_url: string) {
+  return async (message: string, sessionId: string) => {
+    try {
+      const response = await axios.get(api_url, {
+        params: { message, sessionId },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data.botReply;
+    } catch (error) {
+      console.error('Error fetching bot reply:', error);
+      return "I'm sorry, I encountered an issue. Please try again.";
+    }
+  };
+}
+
+export const getManualBotReply = getBotReply(API_URL_MANUAL);
+export const getOpenAIBotReply = getBotReply(API_URL_OPEN_AI);
+
+/***
+ * Session helpers
+ */
+
+export function getSessionId() {
+  let sessionId = sessionStorage.getItem('sessionId');
+  
+  if (!sessionId) {
+    sessionId = `session-${Math.random().toString(36).substr(2, 9)}`;
+    sessionStorage.setItem('sessionId', sessionId);
+  }
+  return sessionId;
+};
+
+/***
+ * Parse input helpers
+ */
+
+// Simple markdown parser for **bold** text
+export function parseMarkdownSimple(text: string) {
+  // Handle bold (**text**)
+  const boldParsed = text.split(/\*\*(.*?)\*\*/g).map((segment, index) => {
+    return index % 2 === 1 ? <strong key={index}>{segment}</strong> : segment;
+  });
+
+  return boldParsed;
+};
+
+// Function to parse response text for newlines and markdown (like **bold**)
+export function parseResponseText(text: string) {
+  // First, replace newlines with line breaks
+  const lines = text.split('\n').map((line, index) => (
+    <span key={index}>
+      {parseMarkdownSimple(line)}
+      <br />
+    </span>
+  ));
+
+  return lines;
+};
+
+/***
+ * Export chat helpers
+ */
+
+function loadImageAsBase64(url: string): Promise<string> {
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.crossOrigin = 'Anonymous';
@@ -26,7 +99,7 @@ const generateFileName = () => {
     return `chat-export-${date}-${time}.pdf`;
 };
 
-export const exportChatToPdf = async (messages: Message[], contactInfo = { name: "Francisco Arantes", email: "farantesrodrigues@gmail.com", phone: "+32 (0) 486 970 355" }) => {
+export async function exportChatToPdf(messages: Message[], contactInfo = { name: "Francisco Arantes", email: "farantesrodrigues@gmail.com", phone: "+32 (0) 486 970 355" }) {
     const doc = new jsPDF();
 
     try {
