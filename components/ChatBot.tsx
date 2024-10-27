@@ -6,7 +6,7 @@ import { getOpenAIBotReply, getSessionId, parseResponseText, exportChatToPdf } f
 import Toolbar from './Toolbar';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import DynamicCVModal from './DynamicCV';
-import ProjectInfoModal from './ProjectInfoModal';
+import ProjectInfoModal from './ProjectInfo';
 
 
 const ChatBot = () => {
