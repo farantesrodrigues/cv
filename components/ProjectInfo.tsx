@@ -44,7 +44,7 @@ const ProjectInfoModal: React.FC<ProjectInfoModalProps> = ({ onClose }) => {
               <img src="/my-avatar.webp" alt="My Avatar" className="w-16 h-16 rounded-full mr-4" />
               <div>
                 <p>
-                  When reimagining my CV, I aimed to create an <em>interactive</em> experience rather than a traditional document. 
+                  When reimagining my Imagcve, I aimed to create an <em>interactive</em> experience rather than a traditional document. 
                   This project became a chance to showcase <em>prompt engineering</em> and <em>cloud integration</em> in a recruitment tool that 
                   feels both fun and functional.
                   <br /><br />
@@ -99,7 +99,7 @@ const ProjectInfoModal: React.FC<ProjectInfoModalProps> = ({ onClose }) => {
               </h4>
               <p>
                 The primary Lambda function calls the <em>OpenAI API</em> to generate responses. This interaction is guided by my <em>tailored prompt structure</em>, 
-                enhancing the chatbot's conversational relevance and allowing nuanced replies that reflect my professional profile.
+                enhancing the chatbot&apos;s conversational relevance and allowing nuanced replies that reflect my professional profile.
               </p>
             </div>
 
@@ -111,7 +111,7 @@ const ProjectInfoModal: React.FC<ProjectInfoModalProps> = ({ onClose }) => {
               </h4>
               <p>
                 <strong>AWS Cognito</strong> secures access by managing <em>authentication</em> and <em>authorization</em>. For controlled distribution, I manually create user profiles, 
-                ensuring only intended audiences have access to my <u>“not a CV”</u> app.
+                ensuring only intended audiences have access to my <u>not-a-cv</u> app.
               </p>
             </div>
 
