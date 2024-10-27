@@ -59,27 +59,25 @@ const DynamicCVModal: React.FC<DynamicCVModalProps> = ({ onClose }) => {
                 {/* Toolbar */}
                 <div className="sticky top-0 bg-white p-4 border-b flex justify-between items-center gap-4 z-50">
                     {/* Display mode switch */}
-                    <div className="flex items-center">
-                        <Switch.Group>
-                            <Switch.Label className="mr-4 text-sm font-medium text-gray-700">
-                                {showJsonView ? 'Show SVG View' : 'Show JSON View'}
-                            </Switch.Label>
-                            <Switch
-                                checked={showJsonView}
-                                onChange={setShowJsonView}
+                    <Switch.Group as="div" className="flex items-center">
+                        <Switch.Label className="mr-4 text-sm font-medium text-gray-700">
+                            {showJsonView ? 'Show SVG View' : 'Show JSON View'}
+                        </Switch.Label>
+                        <Switch
+                            checked={showJsonView}
+                            onChange={setShowJsonView}
+                            className={`${
+                                showJsonView ? 'bg-blue-600' : 'bg-gray-200'
+                            } relative inline-flex h-6 w-11 items-center rounded-full`}
+                        >
+                            <span className="sr-only">Toggle display mode</span>
+                            <span
                                 className={`${
-                                    showJsonView ? 'bg-blue-600' : 'bg-gray-200'
-                                } relative inline-flex h-6 w-11 items-center rounded-full`}
-                            >
-                                <span className="sr-only">Toggle display mode</span>
-                                <span
-                                    className={`${
-                                        showJsonView ? 'translate-x-6' : 'translate-x-1'
-                                    } inline-block h-4 w-4 transform bg-white rounded-full transition`}
-                                />
-                            </Switch>
-                        </Switch.Group>
-                    </div>
+                                    showJsonView ? 'translate-x-6' : 'translate-x-1'
+                                } inline-block h-4 w-4 transform bg-white rounded-full transition`}
+                            />
+                        </Switch>
+                    </Switch.Group>
 
                     {/* Collapse/Expand Button with Icon and Tooltip */}
                     {showJsonView && (
