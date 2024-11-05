@@ -32,12 +32,6 @@ export default class MyDocument extends Document {
 
           {/* Favicon */}
           <link rel="icon" href="/favicon.ico" />
-
-          {/* Custom Styles or External CSS */}
-          <link
-            rel="stylesheet"
-            href="https://example.com/custom-stylesheet.css"
-          />
         </Head>
 
         <body>

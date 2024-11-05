@@ -1,9 +1,13 @@
 import Head from 'next/head';
 import { getCognitoLoginUrl } from '@/utils/authHelpers';
+import { useRedirectIfAuthenticated } from '@/hooks/useRedirectIfAuthenticated';
 
 export default function Home() {
+  useRedirectIfAuthenticated()
+
   const handleSignIn = () => {
     const loginUrl = getCognitoLoginUrl();
+    console.log("logging in");
     
     if (loginUrl) {
       window.location.href = loginUrl;

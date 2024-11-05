@@ -1,10 +1,11 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN;
 const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;
 const clientSecret = process.env.NEXT_PUBLIC_COGNITO_CLIENT_SECRET
-const lamdaDomain = process.env.NEXT_PUBLIC_LAMBDA_DOMAIN
 const redirectUri = process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URI;
+const redirectUriLogout = process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URI_LOGOUT
 
 export interface Tokens {
   idToken: string;
@@ -89,18 +90,12 @@ export const checkTokenExpiration = (token: string): boolean => {
   }
 };
 
-export const clearTokens = async () => {
-  try {
-    const response = await axios.post(`${lamdaDomain}/logout`, {
-      withCredentials: true,
-    });
+export const logout = () => {
+  Cookies.remove('idToken');
+  Cookies.remove('accessToken');
+  Cookies.remove('refreshToken');
 
-    if (response.data.ok) {
-      console.log('Logout successful');
-    } else {
-      console.error('Logout failed:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error during logout:', error);
-  }
+  const logoutUrl = `https://${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${redirectUriLogout}`;
+
+  window.location.href = logoutUrl;
 };

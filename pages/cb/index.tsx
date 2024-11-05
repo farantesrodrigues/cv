@@ -1,41 +1,40 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAuthStore } from '../../stores/authStore';
-import { handleRedirect, Tokens } from '@/utils/authHelpers';
+import { handleRedirect } from '@/utils/authHelpers';
+import { useAuthStore } from '@/stores/authStore';
 
-const Callback: React.FC = () => {
-    const router = useRouter();
-    const setTokens = useAuthStore((state) => state.setTokens);
-    const [error, setError] = useState<string | null>(null);
-  
-    useEffect(() => {
-      const exchangeCodeForTokens = async (code: string) => {
-        try {
-          const tokens: Tokens | null = await handleRedirect(code);
-          if (tokens) {
-            const { idToken, accessToken, refreshToken } = tokens;
-            setTokens(idToken, accessToken, refreshToken);
-            router.push('/fran/');
-          } else {
-            setError('Authentication failed. Please try again.');
-          }
-        } catch (err) {
-          console.error('Token exchange failed:', err);
-          setError('Authentication failed. Please try again.');
-        }
-      };
-  
+const Callback = () => {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const setTokens = useAuthStore((state) => state.setTokens);
+
+  useEffect(() => {
+    const exchangeCodeForTokens = async () => {
       const code = router.query.code as string;
       if (code) {
-        exchangeCodeForTokens(code);
+        try {
+          const tokens = await handleRedirect(code);
+
+          // Check if tokens are present
+          if (tokens && tokens.idToken && tokens.accessToken && tokens.refreshToken) {
+            setTokens(tokens.idToken, tokens.accessToken, tokens.refreshToken)
+            router.push('/fran');
+          } else {
+            // Handle case where tokens are missing
+            setError('Authentication failed. Please try again.');
+            console.error('Missing tokens:', tokens);
+          }
+        } catch (err) {
+          setError('Authentication failed. Please try again.');
+          console.error('Token exchange failed:', err);
+        }
       }
-    }, [router, setTokens]);
-  
-    if (error) {
-      return <div>{error}</div>;
-    }
-  
-    return <div>Authenticating...</div>;
-  };
-  
-  export default Callback;
+    };
+
+    exchangeCodeForTokens();
+  }, [router.query.code]);
+
+  return error ? <div>{error}</div> : <div>Authenticating...</div>;
+};
+
+export default Callback;

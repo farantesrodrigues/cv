@@ -4,10 +4,8 @@ import { useAuthStore } from '../stores/authStore';
 
 export const useRedirectIfAuthenticated = (redirectTo = '/fran') => {
   const router = useRouter();
-  const { isAuthenticated, loading } = useAuthStore((state) => ({
-    isAuthenticated: state.isAuthenticated,
-    loading: state.loading,
-  }));
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const loading = useAuthStore((state) => state.loading);
 
   useEffect(() => {
     if (isAuthenticated && !loading) {
